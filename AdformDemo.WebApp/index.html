@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Adform tech interview task implementation</title>
+	<meta charset="utf-8" />
+</head>
+<body>
+    <div>
+        <h2>Adform tech interview task implementation</h2>
+    </div>
+    <div>
+        <p>1. Retrieves impressions split by date for this year
+(Metric: "impressions", dimension: "date", filter: "thisYear").
+Aggregates retrieved data by week and provide result how much
+impressions  was each week this year.</p>
+        <input type="button" value="Get result" onclick="getDemoData('api/impressions', '#demo1');" />
+        <ul id="demo1" />
+    </div>
+
+    <div>
+        <p>2. Retrieves bid requests split by date for this year (Metric: "bidRequests").
+In retrieved result finds data anomalies when bidrequests increased or
+decreased  3 or more times compared to previous day.
+        </p>
+        <input type="button" value="Get result" onclick="getDemoData('api/bidrequests', '#demo2');" />
+        <ul id="demo2" />
+    </div>
+
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
+    <script>
+
+        function getDemoData(uri, elem) {
+            
+            $.getJSON(uri)
+                .done(function (data) {
+                    $.each(data, function (key, item) {
+                        // Add a list item for the product.
+                        $('<li>', { text: JSON.stringify(item) }).appendTo($(elem));
+                    });
+                })
+                .fail(function (jqXHR, textStatus, err) {
+                    $(elem).text('Error: ' + err);
+                });
+        }
+
+    
+    </script>
+ </body>   
+</html>
