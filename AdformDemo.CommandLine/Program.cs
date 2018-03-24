@@ -25,12 +25,12 @@ namespace AdformDemo.CommandLine
 
         private void Execute()
         {
-            Console.WriteLine("Adform tech interview task implementation, 2018.03.26");
+            Console.WriteLine($"Adform tech interview task implementation, {DateTime.Now}");
             Console.Write("-----------------------------------------------------");
 
             do
             {
-                Console.WriteLine("\nChoose:\n\t(i) - to aggregate impressions by week\n\t(b) - to get anomalies in bidrequestы\n\t(ESC) - to exit\n");
+                Console.WriteLine("\nChoose:\n\t(i) - to aggregate impressions by week\n\t(b) - to get anomalies in bidrequests\n\t(ESC) - to exit\n");
                 var choice = Console.ReadKey(true);
 
                 if (choice.Key == ConsoleKey.Escape)
