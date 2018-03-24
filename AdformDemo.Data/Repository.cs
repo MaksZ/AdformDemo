@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace AdformDemo.Data
 {
+    /// <summary>
+    /// Repository of report data
+    /// </summary>
     public class Repository
     {
         private readonly string clientId;
@@ -15,10 +18,19 @@ namespace AdformDemo.Data
 
         private Task<UserCredential> credentialTask;
 
+        /// <summary>
+        /// Filter used to manage scope of data
+        /// </summary>
         public ReportFilter DefaultReportFilter { get; set; } = new ReportFilter { Date = "thisYear" };
 
+        /// <summary>
+        /// Returns Impressions
+        /// </summary>
         public Task<IEnumerable<ImpressionsRaw>> ImpressionsAsync => GetEntitiesAsync<ImpressionsRaw>();
 
+        /// <summary>
+        /// Returns BidRequests
+        /// </summary>
         public Task<IEnumerable<BidRequestsRaw>> BidRequests => GetEntitiesAsync<BidRequestsRaw>();
 
         public Repository(string clientId, string clientSecret)
@@ -32,11 +44,16 @@ namespace AdformDemo.Data
         /// </remark>
         private Task<UserCredential> GetCredential() => credentialTask ?? (credentialTask = AuthorizationBroker.AuthorizeAsync(clientId, clientSecret));
 
+        /// <summary>
+        /// Retrieves reports data by the given entity
+        /// </summary>
         private async Task<IEnumerable<TEntity>> GetEntitiesAsync<TEntity>() where TEntity : new()
         {
             var credential = await GetCredential().ConfigureAwait(false);
 
-            return await new ReportDataService(credential).GetData<TEntity>(DefaultReportFilter).ConfigureAwait(false);
+            return await new ReportDataService(credential)
+                .GetData<TEntity>(DefaultReportFilter)
+                .ConfigureAwait(false);
         }
     }
 }

@@ -10,6 +10,10 @@ using System.Threading.Tasks;
 
 namespace Adform.Api
 {
+    /// <summary>
+    /// Helper class to deserialize data from service
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     internal class ReportDataParser<T> where T : new()
     {
         private readonly Dictionary<PropertyInfo, PropertyFeatureAttribute> propMap;
@@ -108,6 +112,9 @@ namespace Adform.Api
         }
     }
 
+    /// <summary>
+    /// Base class for object property feature
+    /// </summary>
     public abstract class PropertyFeatureAttribute : Attribute
     {
         public string Name { get; }
@@ -118,16 +125,21 @@ namespace Adform.Api
         }
     }
 
+    /// <summary>
+    /// Marked with this attribute property is treated as dimension
+    /// </summary>
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
     public class DimensionAttribute : PropertyFeatureAttribute
     {
         public DimensionAttribute(string name) : base(name) { }
     }
 
+    /// <summary>
+    /// Marked with this attribute property is treated as metric
+    /// </summary>
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
     public class MetricAttribute : PropertyFeatureAttribute
     {
         public MetricAttribute(string name) : base(name) { }
     }
-
 }

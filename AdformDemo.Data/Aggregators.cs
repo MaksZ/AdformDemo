@@ -30,9 +30,6 @@ namespace AdformDemo.Data
         /// <summary>
         /// Finds data anomalies when bidrequests increased or decreased given in <paramref name="anomalyFactor"/> or more times compared to previous day
         /// </summary>
-        /// <param name="source"></param>
-        /// <param name="anomalyFactor"></param>
-        /// <returns></returns>
         public static DateTime[] GetAnomalies(this IEnumerable<BidRequestsRaw> source, int anomalyFactor)
         {
             Func<BidRequestsRaw, BidRequestsRaw, bool> hasAnomaly =
@@ -54,7 +51,10 @@ namespace AdformDemo.Data
                 .Select(x => x.Date)
                 .ToArray();
         }
-                
+
+        /// <summary>
+        /// Helper method to filter items based on predicate applied for neighbour items
+        /// </summary>
         private static IEnumerable<T> FilterByPrevious<T>(this IEnumerable<T> source, Func<T, T, bool> predicate)
         {
             using (var e = source.GetEnumerator())
@@ -77,6 +77,9 @@ namespace AdformDemo.Data
         }
     }
 
+    /// <summary>
+    /// Helper class to calculate a week number within a year
+    /// </summary>
     public static class CalendarHelper
     {
         public static Calendar CurrentCalendar { get; set; } = CultureInfo.InvariantCulture.Calendar;
@@ -85,6 +88,9 @@ namespace AdformDemo.Data
 
         public static DayOfWeek CurrentDayOfWeek { get; set; } = DayOfWeek.Monday;
 
+        /// <summary>
+        /// Returns week number for the given date
+        /// </summary>
         public static int GetWeekOfYear(this DateTime date)
             =>
                 CurrentCalendar.GetWeekOfYear(date, CurrentCalendarWeekRule, CurrentDayOfWeek);

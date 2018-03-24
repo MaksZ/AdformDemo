@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace Adform.Api
 {
+    /// <summary>
+    /// Implements logic for accessing of report data
+    /// </summary>
     public class ReportDataService
     {
         private readonly UserCredential credential;
@@ -18,6 +21,14 @@ namespace Adform.Api
             this.credential = credential;
         }
 
+        /// <summary>
+        /// Retrieves report data; 
+        /// given type should contain public properties marked 
+        /// with attributes [Dimension] or [Metric],
+        /// those will be passed to service within request
+        /// </summary>
+        /// <typeparam name="T">Type containing desired dimensions and metrics</typeparam>
+        /// <param name="filter">Data filter</param>
         public async Task<IEnumerable<T>> GetData<T>(ReportFilter filter) where T : new ()
         {
             var parser = new ReportDataParser<T>();
