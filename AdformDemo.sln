@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdformDemo.CommandLine", "AdformDemo.CommandLine\AdformDemo.CommandLine.csproj", "{D7C977A9-8C65-46D2-AFE0-9C881901C2A5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adform.Api", "Adform.Api\Adform.Api.csproj", "{688679D5-F9A1-417C-9EAD-87AC4712817C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdformDemo.Data", "AdformDemo.Data\AdformDemo.Data.csproj", "{F388D93B-E3FD-4C36-96CC-3D64471F80C0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D7C977A9-8C65-46D2-AFE0-9C881901C2A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7C977A9-8C65-46D2-AFE0-9C881901C2A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7C977A9-8C65-46D2-AFE0-9C881901C2A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7C977A9-8C65-46D2-AFE0-9C881901C2A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{688679D5-F9A1-417C-9EAD-87AC4712817C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{688679D5-F9A1-417C-9EAD-87AC4712817C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{688679D5-F9A1-417C-9EAD-87AC4712817C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{688679D5-F9A1-417C-9EAD-87AC4712817C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F388D93B-E3FD-4C36-96CC-3D64471F80C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F388D93B-E3FD-4C36-96CC-3D64471F80C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F388D93B-E3FD-4C36-96CC-3D64471F80C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F388D93B-E3FD-4C36-96CC-3D64471F80C0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
