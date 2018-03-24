@@ -19,8 +19,8 @@ namespace AdformDemo.Tests.Data
 
             var result = source.GroupByWeek();
 
-            Assert.IsNotNull(result, "Empty array expected!");
-            Assert.IsTrue(result.Length == 0, "Empty array expected!");
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.Length == 0, "Empty array is expected!");
         }
 
         [TestMethod]
@@ -30,7 +30,7 @@ namespace AdformDemo.Tests.Data
 
             var result = source.GroupByWeek();
 
-            Assert.IsNotNull(result, "Empty array is not expected!");
+            Assert.IsNotNull(result);
             Assert.AreEqual(source.Length, result.Length);
             Assert.AreEqual(source[0].Date.GetWeekOfYear(), result[0].Week);
             Assert.AreEqual(source[0].Value, result[0].Total);
@@ -44,7 +44,7 @@ namespace AdformDemo.Tests.Data
 
             var result = source.GroupByWeek();
 
-            Assert.IsNotNull(result, "Empty array is not expected!");
+            Assert.IsNotNull(result);
             Assert.AreEqual(1, result.Length);
             Assert.AreEqual(weekNo, result[0].Week);
         }
@@ -57,7 +57,7 @@ namespace AdformDemo.Tests.Data
 
             var result = source.GroupByWeek();
 
-            Assert.IsNotNull(result, "Empty array is not expected!");
+            Assert.IsNotNull(result);
             Assert.AreEqual(values.Sum(), result[0].Total);
         }
 
@@ -72,7 +72,7 @@ namespace AdformDemo.Tests.Data
 
             var result = source.GroupByWeek();
 
-            Assert.IsNotNull(result, "Empty array is not expected!");
+            Assert.IsNotNull(result);
             Assert.IsTrue(weekNos.Zip(result.Select(x => x.Week), (exp, act) => exp == act).All(x => x));
         }
 
@@ -102,6 +102,106 @@ namespace AdformDemo.Tests.Data
             };
 
             return source;
+        }
+
+        [TestMethod]
+        public void GetAnomaliesReturnsEmptyArrayOnEmptySource()
+        {
+            var source = Enumerable.Empty<BidRequestsRaw>();
+
+            var result = source.GetAnomalies(3);
+
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.Length == 0, "Empty array is expected!");
+        }
+
+        [TestMethod]
+        public void GetAnomaliesReturnsEmptyArrayOnOneElementSource()
+        {
+            var source = GetBidRequests(new[] { 0 });
+
+            var result = source.GetAnomalies(3);
+
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.Length == 0, "Empty array is expected!");
+        }
+
+        [TestMethod]
+        public void GetAnomaliesFindsAnomalyWhenValueIncreased()
+        {
+            const int anomalyFactor = 3;
+
+            var values = new int[] { 10, anomalyFactor * 10 };
+
+            var source = GetBidRequests(values);
+
+            var result = source.GetAnomalies(anomalyFactor);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(1, result.Length, "One one item is expected!");
+            Assert.AreEqual(source[1].Date, result[0], "Anomaly date is expected!");
+        }
+
+        [TestMethod]
+        public void GetAnomaliesFindsAnomalyWhenValueDecreased()
+        {
+            const int anomalyFactor = 3;
+
+            var values = new int[] { anomalyFactor * 10, 10 };
+
+            var source = GetBidRequests(values);
+
+            var result = source.GetAnomalies(anomalyFactor);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(1, result.Length, "One one item is expected!");
+            Assert.AreEqual(source[1].Date, result[0], "Anomaly date is expected!");
+        }
+
+        [TestMethod]
+        public void GetAnomaliesDoesNotFindAnomalyWhenValuesLessThanRequired()
+        {
+            const int anomalyFactor = 3;
+
+            var values = new int[] 
+            {
+                anomalyFactor * 10 - 5,
+                10,
+                anomalyFactor * 10 - 1
+            };
+
+            var source = GetBidRequests(values);
+
+            var result = source.GetAnomalies(anomalyFactor);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(0, result.Length, "Empty array is expected!");
+        }
+
+        [TestMethod]
+        public void GetAnomaliesDoesNotFailOnZeroValues()
+        {
+            const int anomalyFactor = 3;
+
+            var values = new int[] { 7, 0, 0, 5 };
+
+            var source = GetBidRequests(values);
+
+            var result = source.GetAnomalies(anomalyFactor);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(2, result.Length);
+            Assert.AreEqual(source[1].Date, result[0]);
+            Assert.AreEqual(source[3].Date, result[1]);
+        }
+
+        private BidRequestsRaw[] GetBidRequests(int[] values, DateTime seed = default(DateTime))
+        {
+            if (seed == default(DateTime)) seed = new DateTime(2018, 3, 26);
+
+            return values
+                .Select((v, i) => new BidRequestsRaw { Date = seed.AddDays(i), Value = v })
+                .ToArray();
         }
     }
 }
