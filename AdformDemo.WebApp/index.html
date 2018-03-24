@@ -36,7 +36,6 @@ decreased  3 or more times compared to previous day.
                 .done(function (data) {
                     $(elem).text('');
                     $.each(data, function (key, item) {
-                        // Add a list item for the product.
                         $('<li>', { text: JSON.stringify(item) }).appendTo($(elem));
                     });
                 })
