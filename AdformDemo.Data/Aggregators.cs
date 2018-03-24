@@ -77,7 +77,7 @@ namespace AdformDemo.Data
         }
     }
 
-    static class CalendarHelper
+    public static class CalendarHelper
     {
         public static Calendar CurrentCalendar { get; set; } = CultureInfo.InvariantCulture.Calendar;
 
